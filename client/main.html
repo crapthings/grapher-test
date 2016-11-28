@@ -4,11 +4,13 @@
 
 <body>
   <h1>Welcome to Meteor!</h1>
-
   {{> hello}}
 </body>
 
 <template name="hello">
   <button>Click Me</button>
-  <p>{{{string}}}</p>
+  {{#each comments}}
+    <p>comment: {{content}}</p>
+    <h5>which post: {{post.title}} - {{post._id}}</h5>
+  {{/each}}
 </template>
