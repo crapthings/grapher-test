@@ -1,23 +1,16 @@
-Template.hello.onCreated(function helloOnCreated() {
+Tracker.autorun(() => {
 
-  const query = Comments.createQuery({
-    content: 1,
-    post: {
-      title: 1,
+  const query = Contracts.createQuery({
+    totalOrdersAmount: 1,
+    totalPaymentsAmount: 1,
+    user: {
+      name: 1,
     },
   })
 
-  this.comments = new ReactiveVar([])
+  if (query.subscribe().ready()) {
+    const data = query.fetch()
+    console.log(JSON.stringify(data, null, 4))
+  }
 
-  Tracker.autorun(() => {
-    if (query.subscribe().ready())
-      this.comments.set(query.fetch())
-  })
-
-});
-
-Template.hello.helpers({
-  comments() {
-    return Template.instance().comments.get()
-  },
 })
